@@ -1,5 +1,7 @@
 logs/
+.idea
 npm-debug.log
 node_modules/
 coverage/
 run/
+package-lock.json

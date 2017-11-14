@@ -1,6 +1,5 @@
 'use strict';
 
-const request = require('supertest');
 const mm = require('egg-mock');
 const assert = require('assert');
 
@@ -17,7 +16,7 @@ describe('test/validate.test.js', () => {
 
   describe('get', () => {
     it('should return invalid_param when body empty', () => {
-      return request(app.callback())
+      return app.httpRequest()
       .get('/users.json')
       .type('json')
       .expect(422)
@@ -32,7 +31,7 @@ describe('test/validate.test.js', () => {
     });
 
     it('should all pass', () => {
-      return request(app.callback())
+      return app.httpRequest()
       .get('/users.json')
       .send({
         username: 'foo@gmail.com',
@@ -51,7 +50,7 @@ describe('test/validate.test.js', () => {
 
   describe('post', () => {
     it('should return invalid_param when body empty', () => {
-      return request(app.callback())
+      return app.httpRequest()
       .post('/users.json')
       .expect(422)
       .expect(res => {
@@ -65,7 +64,7 @@ describe('test/validate.test.js', () => {
     });
 
     it('should return invalid_param when length invaild', () => {
-      return request(app.callback())
+      return app.httpRequest()
       .post('/users.json')
       .send({
         username: 'foo',
@@ -83,7 +82,7 @@ describe('test/validate.test.js', () => {
     });
 
     it('should return invalid_param when password not equal to re-password', () => {
-      return request(app.callback())
+      return app.httpRequest()
       .post('/users.json')
       .send({
         username: 'foo@gmail.com',
@@ -101,7 +100,7 @@ describe('test/validate.test.js', () => {
     });
 
     it('should return invalid_param when username invaild', () => {
-      return request(app.callback())
+      return app.httpRequest()
       .post('/users.json')
       .send({
         username: '.foo@gmail.com',
@@ -119,7 +118,7 @@ describe('test/validate.test.js', () => {
     });
 
     it('should all pass', () => {
-      return request(app.callback())
+      return app.httpRequest()
       .post('/users.json')
       .send({
         username: 'foo@gmail.com',
@@ -137,7 +136,7 @@ describe('test/validate.test.js', () => {
 
   describe('addRule()', () => {
     it('should check custom rule ok', () => {
-      return request(app.callback())
+      return app.httpRequest()
       .post('/users.json')
       .send({
         username: 'foo@gmail.com',
